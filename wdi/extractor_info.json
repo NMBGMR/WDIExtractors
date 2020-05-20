@@ -1,0 +1,21 @@
+{
+  "@context": "http://localhost:8000/contexts/extractors.jsonld",
+  "name": "wdi.ckan",
+  "version": "0.1",
+  "description": "",
+  "author": "Jake Ross",
+  "contributors": [],
+  "contexts": [
+    {}
+  ],
+  "repository": [
+    {
+      "repType": "git",
+      "repUrl": "https://github.com/NMBGMR/WLextractor"
+    }
+  ],
+  "process": {"file": ["application/x-yaml"]},
+  "external_services": [],
+  "dependencies": [],
+  "bibtex": []
+}

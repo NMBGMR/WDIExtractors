@@ -1,0 +1,21 @@
+{
+  "@context": "http://localhost:8000/contexts/extractors.jsonld",
+  "name": "wdi.xls",
+  "version": "0.1",
+  "description": "Convert xls to upload.yml format",
+  "author": "Jake Ross",
+  "contributors": [],
+  "contexts": [
+    {}
+  ],
+  "repository": [
+    {
+      "repType": "git",
+      "repUrl": "https://github.com/NMBGMR/WLextractor"
+    }
+  ],
+  "process": {"file": ["application/vnd.ms-excel"]},
+  "external_services": [],
+  "dependencies": [],
+  "bibtex": []
+}

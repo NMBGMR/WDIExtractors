@@ -1,0 +1,21 @@
+{
+  "@context": "http://localhost:8000/contexts/extractors.jsonld",
+  "name": "wdi.st",
+  "version": "0.1",
+  "description": "",
+  "author": "Jake Ross",
+  "contributors": [],
+  "contexts": [
+    {"sensorthings": ""}
+  ],
+  "repository": [
+    {
+      "repType": "git",
+      "repUrl": "https://github.com/NMBGMR/WLextractor"
+    }
+  ],
+  "process": {"file": ["text/*"]},
+  "external_services": [],
+  "dependencies": [],
+  "bibtex": []
+}

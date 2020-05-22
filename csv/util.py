@@ -26,7 +26,7 @@ logger = logging.getLogger('Parser')
 logger.setLevel(logging.DEBUG)
 
 
-def rows_to_yaml(items, path):
+def rows_to_yaml(path, items):
     items = list(items)
     item = items[0]
     logger.debug('items {}'.format(items))

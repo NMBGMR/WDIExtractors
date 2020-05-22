@@ -17,9 +17,9 @@ from os import environ
 import re
 
 import requests
+import logging
 
 IDREGEX = re.compile(r'(?P<id>\(\d+\))')
-
 
 class STBase:
     iotid = None
@@ -29,6 +29,8 @@ class STBase:
     def __init__(self, yd=None):
         self._yd = yd
         self.base_url = environ.get('ST_URL')
+        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger.setLevel(logging.DEBUG)
 
     def __getattr__(self, item):
         return self._yd.get(item, 'No {}'.format(item))
@@ -43,10 +45,11 @@ class STBase:
         :return:
         """
         if not test_unique or not self.get_existing(self.api_tag):
-            print('payload', self.payload())
+            self.logger.info('payload {}'.format(self.payload()))
             resp = requests.post('{}/{}'.format(self.base_url, self.api_tag), json=self.payload())
-            print('response', resp.text)
-            m = IDREGEX.search(resp.headers.get('location'))
+            self.logger.info('response {}'.format(resp.text))
+            self.logger.info('headers {}'.format(resp.headers))
+            m = IDREGEX.search(resp.headers.get('location', ''))
             if m:
                 iotid = m.group('id')[1:-1]
             else:

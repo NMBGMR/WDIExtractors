@@ -68,8 +68,8 @@ def get_observation_type(value):
 
 class Parser:
     def __enter__(self):
-        # self._tempdir = tempfile.mkdtemp()
-        self._tempdir = '/Users/ross/Sandbox/wdi/csvextractor'
+        self._tempdir = tempfile.mkdtemp()
+        # self._tempdir = '/Users/ross/Sandbox/wdi/csvextractor'
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -114,8 +114,8 @@ class Parser:
                 yield tmpfile
 
 
-if __name__ == '__main__':
-    with Parser() as p:
-        for i in p.items('/Users/ross/sandbox/wdi/upload.csv'):
-            print('isda', i)
+# if __name__ == '__main__':
+#     with Parser() as p:
+#         for i in p.items('/Users/ross/sandbox/wdi/upload.csv'):
+#             print('isda', i)
 # ============= EOF =============================================

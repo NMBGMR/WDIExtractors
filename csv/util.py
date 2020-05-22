@@ -21,11 +21,16 @@ from itertools import groupby
 from operator import attrgetter, itemgetter
 
 NO_DESCRIPTION = 'No Description Available'
+import logging
+logger = logging.getLogger('Parser')
+logger.setLevel(logging.DEBUG)
 
 
 def rows_to_yaml(items, path):
     items = list(items)
     item = items[0]
+    logger.debug('items {}'.format(items))
+    logger.debug('item {}'.format(item))
 
     obj = {attr: {'name': item[attr],
                   'description': item.get('{}_description'.format(attr), NO_DESCRIPTION)}

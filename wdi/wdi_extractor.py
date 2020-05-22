@@ -42,8 +42,13 @@ class WDIExtractor(Extractor):
         logger = logging.getLogger(__name__)
 
         url = environ.get('CKAN_URL')
+        apikey = environ.get('CKAN_APIKEY')
+
         logger.debug('CKAN URL={}'.format(url))
-        return RemoteCKAN(url)
+        if apikey is None:
+            logger.debug('Warning: no apikey')
+
+        return RemoteCKAN(url, apikey=apikey)
 
     def process_message(self, connector, host, secret_key, resource, parameters):
         logger = logging.getLogger(__name__)

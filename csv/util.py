@@ -16,7 +16,7 @@
 import os
 import re
 import tempfile
-import yml
+import yaml
 from itertools import groupby
 from operator import attrgetter, itemgetter
 
@@ -46,7 +46,7 @@ def rows_to_yaml(path, items):
     obj['observations'] = ['{}, {}'.format(item['phenomenonTime'], float(item['result'])) for item in items]
 
     with open(path, 'w') as wf:
-        yml.dump(obj, wf)
+        yaml.dump(obj, wf)
 
 
 DOUBLE = re.compile(r'^-?\d+.\d+')

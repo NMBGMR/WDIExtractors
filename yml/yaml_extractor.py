@@ -36,7 +36,6 @@ class YAMLExtractor(Extractor):
 
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
-        datasetid = resource['datasetId']
 
         if self._validate(inputfile):
             # set tags

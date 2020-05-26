@@ -52,11 +52,11 @@ class CSVExtractor(Extractor):
         with Parser() as p:
             for fp in p.items(inputfile):
                 # add yaml file
-                files.upload_to_dataset(connector, host, secret_key, datasetid,
+                fid = files.upload_to_dataset(connector, host, secret_key, datasetid,
                                         fp,
                                         check_duplicate=True)
                 tags = {'tags': ['YNeeded']}
-                files.upload_tags(connector, host, secret_key, fp, tags)
+                files.upload_tags(connector, host, secret_key, fid, tags)
                 os.remove(fp)
 
 

@@ -62,7 +62,7 @@ class YAMLExtractor(Extractor):
                          'sensor', 'observed_property',
                          'datastream', 'observations')
         with open(ip, 'r') as rf:
-            yd = yaml.load(rf)
+            yd = yaml.load(rf, Loader=yaml.SafeLoader)
             try:
                 keys = [key for key in required_keys if key not in yd]
                 if keys:

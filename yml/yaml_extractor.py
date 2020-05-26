@@ -14,28 +14,16 @@
 # limitations under the License.
 # ===============================================================================
 import json
-import os
-import tempfile
-from itertools import groupby
-from operator import attrgetter
-
-import yml
+import yaml
 import logging
 
 from pyclowder import files
-from pyclowder.utils import StatusMessage
 from pyclowder.extractors import Extractor
-import pyclowder.files
-from util import Parser
 
 
-class CSVExtractor(Extractor):
+class YAMLExtractor(Extractor):
     def __init__(self):
         Extractor.__init__(self)
-
-        # add any additional arguments to parser
-        # self.parser.add_argument('--max', '-m', type=int, nargs='?', default=-1,
-        #                          help='maximum number (default=-1)')
 
         # parse command line and load default logging configuration
         self.setup()
@@ -45,29 +33,47 @@ class CSVExtractor(Extractor):
         logging.getLogger('__main__').setLevel(logging.DEBUG)
 
     def process_message(self, connector, host, secret_key, resource, parameters):
-        logger = logging.getLogger(__name__)
+
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
         datasetid = resource['datasetId']
 
-        name = os.path.splitext(os.path.basename(inputfile))[0]
+        if self._validate(inputfile):
+            # set tags
+            tags = {'tags': ['STNeeded', 'CKANNeeded']}
+            rtags = {'tags': ['YNeeded', 'YAMLValidationFailed']}
+        else:
 
-        # set tags
-        tags = {'tags': ['CSVExtracted']}
+            tags = {'tags': ['YAMLValidationFailed']}
+            rtags = {'tags': ['YNeeded']}
+
         files.upload_tags(connector, host, secret_key, file_id, tags)
 
-        with Parser() as p:
-            for fp in p.items(inputfile):
-                # add yaml file
-                files.upload_to_dataset(connector, host, secret_key, datasetid,
-                                        fp,
-                                        check_duplicate=True)
-                tags = {'tags': ['YNeeded']}
-                files.upload_tags(connector, host, secret_key, fp, tags)
-                os.remove(fp)
+        if rtags:
+            headers = {'Content-Type': 'application/json'}
+            url = '{}api/files/{}/tags?key={}'.format(host, file_id, secret_key)
+            connector.delete(url, headers=headers, data=json.dumps(tags),
+                             verify=connector.ssl_verify if connector else True)
+
+    def _validate(self, ip):
+        logger = logging.getLogger(__name__)
+        required_keys = ('location', 'thing',
+                         'sensor', 'observed_property',
+                         'datastream', 'observations')
+        with open(ip, 'r') as rf:
+            yd = yaml.load(rf)
+            try:
+                keys = [key for key in required_keys if key not in yd]
+                if keys:
+                    keys = []
+                    logger.info('validation failed. missing keys={}'.format(keys))
+                else:
+                    return True
+            except yaml.YAMLError as e:
+                logger.critical('Validation of yaml file failed. Error={}'.format(e))
 
 
 if __name__ == '__main__':
-    e = CSVExtractor()
+    e = YAMLExtractor()
     e.start()
 # ============= EOF =============================================

@@ -1,8 +1,8 @@
 {
   "@context": "http://localhost:8000/contexts/extractors.jsonld",
-  "name": "wdi.csv",
+  "name": "wdi.yaml",
   "version": "0.1",
-  "description": "Convert csv to upload.yml format",
+  "description": "Auto process/validate upload.yml format",
   "author": "Jake Ross",
   "contributors": [],
   "contexts": [
@@ -14,7 +14,7 @@
       "repUrl": "https://github.com/NMBGMR/WLextractor"
     }
   ],
-  "process": {"file": ["text/csv"]},
+  "process": {"file": ["application/x-yaml"]},
   "external_services": [],
   "dependencies": [],
   "bibtex": []

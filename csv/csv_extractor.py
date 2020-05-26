@@ -53,8 +53,6 @@ class CSVExtractor(Extractor):
         file_id = resource['id']
         datasetid = parameters['datasetId']
 
-        name = os.path.splitext(os.path.basename(inputfile))[0]
-
         # set tags
         tags = {'tags': ['CSVExtracted']}
         files.upload_tags(connector, host, secret_key, file_id, tags)

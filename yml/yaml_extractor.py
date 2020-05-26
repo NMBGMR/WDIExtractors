@@ -33,7 +33,7 @@ class YAMLExtractor(Extractor):
         logging.getLogger('__main__').setLevel(logging.DEBUG)
 
     def process_message(self, connector, host, secret_key, resource, parameters):
-
+        logger = logging.getLogger(__name__)
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
 
@@ -46,12 +46,14 @@ class YAMLExtractor(Extractor):
             tags = {'tags': ['YAMLValidationFailed']}
             rtags = {'tags': ['YNeeded']}
 
+        logger.debug('adding tags={}'.format(tags))
         files.upload_tags(connector, host, secret_key, file_id, tags)
 
         if rtags:
+            logger.debug('removing tags={}'.format(rtags))
             headers = {'Content-Type': 'application/json'}
             url = '{}api/files/{}/tags?key={}'.format(host, file_id, secret_key)
-            connector.delete(url, headers=headers, data=json.dumps(tags),
+            connector.delete(url, headers=headers, data=json.dumps(rtags),
                              verify=connector.ssl_verify if connector else True)
 
     def _validate(self, ip):

@@ -117,7 +117,7 @@ class Parser:
                 name = '{}.yaml'.format(location_name)
                 tmpfile = os.path.join(self._tempdir, name)
                 rows_to_yaml(tmpfile, items)
-                yield name
+                yield tmpfile
 
 
 # if __name__ == '__main__':

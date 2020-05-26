@@ -13,19 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============================================================================
-import json
 import os
-import tempfile
-from itertools import groupby
-from operator import attrgetter
-
-import yml
 import logging
 
 from pyclowder import files
-from pyclowder.utils import StatusMessage
 from pyclowder.extractors import Extractor
-import pyclowder.files
 from util import Parser
 
 

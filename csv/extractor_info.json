@@ -11,7 +11,7 @@
   "repository": [
     {
       "repType": "git",
-      "repUrl": "https://github.com/NMBGMR/WLextractor"
+      "repUrl": "https://github.com/NMBGMR/WDIextractors"
     }
   ],
   "process": {"file": ["text/csv"]},

@@ -46,9 +46,12 @@ class CSVExtractor(Extractor):
 
     def process_message(self, connector, host, secret_key, resource, parameters):
         logger = logging.getLogger(__name__)
+        logger.debug('resource {}'.format(resource))
+        logger.debug('parameters {}'.format(parameters))
+
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
-        datasetid = resource['datasetId']
+        datasetid = parameters['datasetId']
 
         name = os.path.splitext(os.path.basename(inputfile))[0]
 

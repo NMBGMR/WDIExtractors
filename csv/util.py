@@ -114,9 +114,10 @@ class Parser:
             for location_name, items in groupby(sorted(rows,
                                                        key=itemgetter('location')),
                                                 key=itemgetter('location')):
-                tmpfile = os.path.join(self._tempdir, '{}.yaml'.format(location_name))
+                name = '{}.yaml'.format(location_name)
+                tmpfile = os.path.join(self._tempdir, name)
                 rows_to_yaml(tmpfile, items)
-                yield tmpfile
+                yield name
 
 
 # if __name__ == '__main__':

@@ -54,7 +54,7 @@ def rows_to_yaml(location_name, path, items, wq_tag):
     def obsfactory(i):
         pt = i['CollectionDate']
         pt = datetime.strptime(pt, '%Y-%m-%d %H:%M:%S.%f')
-        return '{}Z, {}'.format(pt.isoformat(timespec="milliseconds"), i[wq_tag])
+        return '{}.000Z, {}'.format(pt.isoformat(), i[wq_tag])
 
     obj['observations'] = [obsfactory(item) for item in items]
 

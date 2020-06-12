@@ -24,6 +24,7 @@ from operator import attrgetter, itemgetter
 
 NO_DESCRIPTION = 'No Description Available'
 import logging
+
 logger = logging.getLogger('Parser')
 logger.setLevel(logging.DEBUG)
 
@@ -39,7 +40,10 @@ def rows_to_yaml(location_name, path, items, wq_tag):
 
     obj = {'location': {'name': location_name, 'description': NO_DESCRIPTION},
            'sensor': {'name': 'Analytical Water Chemistry', 'description': NO_DESCRIPTION},
-           'thing': {'name': 'WaterQuality', 'description': NO_DESCRIPTION},
+           'thing': {'name': 'WaterQuality',
+                     'properties': {'welldepth': item['WellDepth'],
+                                    'datasource': item['DataSource']},
+                     'description': NO_DESCRIPTION},
            'datastream': {'name': '{} Water Quality Datastream'.format(wq_tag), 'description': NO_DESCRIPTION},
            'observed_property': {'name': wq_tag, 'description': NO_DESCRIPTION}}
 
@@ -131,7 +135,6 @@ class Parser:
                 tmpfile = os.path.join(self._tempdir, name)
                 rows_to_yaml(location_name, tmpfile, items, wq_tag)
                 yield tmpfile
-
 
 # if __name__ == '__main__':
 #     with Parser() as p:

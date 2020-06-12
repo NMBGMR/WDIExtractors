@@ -43,6 +43,9 @@ class Thing(Related):
 
     def payload(self):
         p = self._base_payload()
+        if isinstance(self.properties, (list, dict)):
+            p['properties'] = self.properties
+
         if self._related:
             p.update(self._related)
             return p

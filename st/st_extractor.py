@@ -76,7 +76,7 @@ def st_upload(input_file):
     with open(input_file, 'r') as rfile:
 
         try:
-            yd = yml.load(rfile, Loader=yml.SafeLoader)
+            yd = yaml.load(rfile, Loader=yaml.SafeLoader)
         except BaseException as e:
             yd = None
             print('asdf', e)

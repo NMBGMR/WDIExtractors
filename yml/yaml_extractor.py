@@ -62,11 +62,10 @@ class YAMLExtractor(Extractor):
                          'sensor', 'observed_property',
                          'datastream', 'observations')
         with open(ip, 'r') as rf:
-            yd = yaml.load(rf, Loader=yaml.SafeLoader)
             try:
+                yd = yaml.load(rf, Loader=yaml.FullLoader)
                 keys = [key for key in required_keys if key not in yd]
                 if keys:
-                    keys = []
                     logger.info('validation failed. missing keys={}'.format(keys))
                 else:
                     return True

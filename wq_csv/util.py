@@ -120,7 +120,9 @@ class Parser:
                 rows.append(row)
 
             # determine wq_tag from header
-            wq_tag = next((n for n in ('Arsenic', ) if n in header), None)
+            wq_tag = next((n for n in ('Arsenic', 'HCO3',
+                                       'Ca', 'Cl', 'F', 'Mg', 'Na',
+                                       'SO4', 'TDS', 'U') if n in header), None)
             for location_name, items in groupby(sorted(rows,
                                                        key=itemgetter('POINT_ID')),
                                                 key=itemgetter('POINT_ID')):

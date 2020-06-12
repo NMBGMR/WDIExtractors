@@ -41,7 +41,7 @@ def rows_to_yaml(location_name, path, items, wq_tag):
            'sensor': {'name': 'Analytical Water Chemistry', 'description': NO_DESCRIPTION},
            'thing': {'name': 'WaterQuality', 'description': NO_DESCRIPTION},
            'datastream': {'name': '{} Water Quality Datastream'.format(wq_tag), 'description': NO_DESCRIPTION},
-           'observerd_property': {'name': wq_tag, 'description': NO_DESCRIPTION}}
+           'observed_property': {'name': wq_tag, 'description': NO_DESCRIPTION}}
 
     loc = obj['location']
     loc['geometry'] = {'type': 'Point', 'coordinates': [float(item[longitude_key]), float(item[latitude_key])]}

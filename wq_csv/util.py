@@ -40,8 +40,8 @@ def rows_to_yaml(location_name, path, items, wq_tag):
     obj = {'location': {'name': location_name, 'description': NO_DESCRIPTION},
            'sensor': {'name': 'Analytical Water Chemistry', 'description': NO_DESCRIPTION},
            'thing': {'name': 'WaterQuality', 'description': NO_DESCRIPTION},
-           'datastream': {'name': f'{wq_tag} Water Quality Datastream', 'description': NO_DESCRIPTION},
-           'observerd_property': {'name': f'{wq_tag}', 'description': NO_DESCRIPTION}}
+           'datastream': {'name': '{} Water Quality Datastream'.format(wq_tag), 'description': NO_DESCRIPTION},
+           'observerd_property': {'name': wq_tag, 'description': NO_DESCRIPTION}}
 
     loc = obj['location']
     loc['geometry'] = {'type': 'Point', 'coordinates': [float(item[longitude_key]), float(item[latitude_key])]}
@@ -54,7 +54,7 @@ def rows_to_yaml(location_name, path, items, wq_tag):
     def obsfactory(i):
         pt = i['CollectionDate']
         pt = datetime.strptime(pt, '%Y-%m-%d %H:%M:%S.%f')
-        return f'{pt.isoformat(timespec="milliseconds")}Z, {i[wq_tag]}'
+        return '{}Z, {}'.format(pt.isoformat(timespec="milliseconds"), i[wq_tag])
 
     obj['observations'] = [obsfactory(item) for item in items]
 

@@ -1,3 +1,6 @@
 FROM clowder/pyclowder-python3:onbuild
-ENV RABBITMQ_URI=amqp://guest:guest@clowder_rabbitmq_1
+
+ARG clowder_url
+
+ENV RABBITMQ_URI=amqp://guest:guest@${clowder_url}
 ENV MAIN_SCRIPT="yaml_extractor.py"

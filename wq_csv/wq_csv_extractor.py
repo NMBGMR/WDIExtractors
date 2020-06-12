@@ -21,7 +21,7 @@ from pyclowder.extractors import Extractor
 from util import Parser
 
 
-class CSVExtractor(Extractor):
+class WQCSVExtractor(Extractor):
     def __init__(self):
         Extractor.__init__(self)
 
@@ -64,6 +64,6 @@ class CSVExtractor(Extractor):
 
 
 if __name__ == '__main__':
-    e = CSVExtractor()
+    e = WQCSVExtractor()
     e.start()
 # ============= EOF =============================================

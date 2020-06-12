@@ -43,5 +43,5 @@ CASTS = {'double': float,
          'any': str,
          'boolean': bool}
 
-UNITS = {'foot': FOOT, 'feet': FOOT, 'c': DEGC}
+UNITS = {'foot': FOOT, 'feet': FOOT, 'c': DEGC, 'ppm': PPM}
 # ============= EOF =============================================

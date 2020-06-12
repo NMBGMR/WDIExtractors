@@ -1,0 +1,21 @@
+{
+  "@context": "http://localhost:8000/contexts/extractors.jsonld",
+  "name": "wdi.wq_csv",
+  "version": "0.1",
+  "description": "Convert wq_csv to upload.yml format",
+  "author": "Jake Ross",
+  "contributors": [],
+  "contexts": [
+    {}
+  ],
+  "repository": [
+    {
+      "repType": "git",
+      "repUrl": "https://github.com/NMBGMR/WDIextractors"
+    }
+  ],
+  "process": {"file": ["text/csv"]},
+  "external_services": [],
+  "dependencies": [],
+  "bibtex": []
+}

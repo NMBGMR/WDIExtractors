@@ -125,9 +125,8 @@ class STExtractor(Extractor):
             # delete tags
             headers = {'Content-Type': 'application/json'}
             url = '{}api/files/{}/tags?key={}'.format(host, file_id, secret_key)
-            tags = {'tags': ['QCNeeded']}
-            connector.delete(url, headers=headers, data=json.dumps(tags),
-                             verify=connector.ssl_verify if connector else True)
+            tags = {'tags': ['STNeeded']}
+            connector.delete(url, headers=headers, data=json.dumps(tags), verify=connector.ssl_verify)
 
 
 if __name__ == '__main__':

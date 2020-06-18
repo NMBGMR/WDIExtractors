@@ -38,9 +38,10 @@ def rows_to_yaml(location_name, path, items, wq_tag):
     logger.debug('items {}'.format(items))
     logger.debug('item {}'.format(item))
 
-    wd = item['WellDepth']
-    if wd is not None:
-        wd = float(wd)
+    try:
+        wd = float(item['WellDepth'])
+    except:
+        wd = ''
 
     obj = {'location': {'name': location_name, 'description': NO_DESCRIPTION},
            'sensor': {'name': 'Analytical Water Chemistry', 'description': NO_DESCRIPTION},

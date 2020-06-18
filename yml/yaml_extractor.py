@@ -41,6 +41,11 @@ class YAMLExtractor(Extractor):
             # set tags
             tags = {'tags': ['STNeeded', 'CKANNeeded']}
             rtags = {'tags': ['YNeeded', 'YAMLValidationFailed']}
+
+            # set metadata
+            metadata = self._make_metadata(inputfile)
+            files.upload_metadata(connector, host, secret_key, file_id, metadata)
+
         else:
 
             tags = {'tags': ['YAMLValidationFailed']}
@@ -55,6 +60,12 @@ class YAMLExtractor(Extractor):
             url = '{}api/files/{}/tags?key={}'.format(host, file_id, secret_key)
             connector.delete(url, headers=headers, data=json.dumps(rtags),
                              verify=connector.ssl_verify if connector else True)
+
+    def _make_metadata(self, ip):
+        with open(ip, 'r') as rf:
+            yd = yaml.load(rf, Loader=yaml.FullLoader)
+            obs = yd['observations']
+            return {'nobservations': len(obs)}
 
     def _validate(self, ip):
         logger = logging.getLogger(__name__)

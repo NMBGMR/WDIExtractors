@@ -74,7 +74,6 @@ def st_upload(input_file):
     """
     ret = {}
     with open(input_file, 'r') as rfile:
-
         try:
             yd = yaml.load(rfile, Loader=yaml.SafeLoader)
         except BaseException as e:

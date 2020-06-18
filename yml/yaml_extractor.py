@@ -44,7 +44,11 @@ class YAMLExtractor(Extractor):
 
             # set metadata
             metadata = self._make_metadata(inputfile)
-            files.upload_metadata(connector, host, secret_key, file_id, metadata)
+            metadata = self.get_metadata(metadata, 'file', file_id, host)
+            try:
+                files.upload_metadata(connector, host, secret_key, file_id, metadata)
+            except BaseException:
+                return
 
         else:
 

@@ -14,16 +14,24 @@
 # limitations under the License.
 # ===============================================================================
 
+# this is a duplication of the cv definitions service.
+# eventually this extractor should pull this info from the cv service
+# instead of having it stored locally here
+
 FOOT = {'name': 'Foot',
         'symbol': 'ft',
-        'definition': 'http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Foot'}
+        'definition': 'http://www.qudt.org/vocab/unit/FT'}
 DEGC = {'name': 'Degree Celsius',
         'symbol': 'degC',
-        'definition': 'http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#DegreeCelsius'}
+        'definition': 'http://www.qudt.org/vocab/unit/DEG_C'}
+
+GAL = {'name': 'Gallon',
+       'symbol': 'gal',
+       'definition': 'http://qudt.org/vocab/unit/GAL_US'}
 
 PPM = {'name': 'Parts Per Million',
        'symbol': 'PPM',
-       'definition': 'http://www.qudt.org/qudt/owl/1.0.0'}
+       'definition': 'http://www.qudt.org/vocab/unit/PPM'}
 
 OM_CategoryObservation = 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation'
 OM_CountObservation = 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation'
@@ -43,5 +51,10 @@ CASTS = {'double': float,
          'any': str,
          'boolean': bool}
 
-UNITS = {'foot': FOOT, 'feet': FOOT, 'c': DEGC, 'ppm': PPM}
+UNITS = {'foot': FOOT,
+         'feet': FOOT,
+         'c': DEGC,
+         'ppm': PPM,
+         'gallon': GAL,
+         'gal': GAL}
 # ============= EOF =============================================

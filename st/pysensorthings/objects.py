@@ -13,13 +13,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============================================================================
-
+import requests
 from pysensorthings.base import STBase, Related
 from pysensorthings.definitions import FOOT, OM_Observation, UNITS, OTYPES, CASTS
 
 
 class Location(STBase):
     api_tag = 'Locations'
+    _name = None
+
+    @property
+    def name(self):
+        """
+        if name =='NMWDI-$autoinc' the greatest id (X) is retrieved and incremented by 1. the new name is
+        NMWDI-000000<X+1>.  e.g. NMWDI-00000004
+
+        the greatest id is only retrieved once per Location and the name is cached.
+        :return:
+        """
+        name = self._yd['name']
+        if self._name:
+            name = self._name
+        elif name == 'NMWDI-$autoinc':
+            # get the last NMWDI idenifier, increment 1.
+            # Location.name == NMWDI-{Location.id}
+            i = 0
+            url = "{}/Locations?$orderby=id+desc&$filter=startswith(name,  'NMWDI-')".format(self.base_url, )
+            resp = requests.get(url)
+            if resp:
+                try:
+                    i = int(resp.json()['value'][0]['@iot.id'])
+                except (IndexError, ValueError, TypeError) as e:
+                    self.logger.warning('Failed getting latest location id: {}'.format(e))
+
+            name = 'NMWDI-{:06n}'.format(i+1)
+            self._name = name
+
+        return name
 
     def payload(self):
         p = self._base_payload()

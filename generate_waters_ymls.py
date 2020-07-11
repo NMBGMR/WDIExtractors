@@ -69,7 +69,7 @@ def meter_factory(meter):
 def datastream_factory():
     return {'name': 'Meter Reading',
             'description': 'OSE POD meter reading',
-            'unitofMeasurement': 'foot',
+            'unitofMeasurement': 'gal',
             'observationType': 'double'}
 
 
@@ -110,7 +110,7 @@ def main():
             print('obj', obj)
 
             # write to file. upload to clowder is currently manual
-            with open('data/waters/{}.yml'.format(podid), 'w') as wfile:
+            with open('./data/waters/{}.yml'.format(podid), 'w') as wfile:
                 yaml.dump(obj, wfile)
 
 

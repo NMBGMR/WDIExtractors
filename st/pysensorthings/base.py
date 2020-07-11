@@ -29,6 +29,8 @@ class STBase:
     def __init__(self, yd=None):
         self._yd = yd
         self.base_url = environ.get('ST_URL')
+        self._password = environ.get('ST_WRITE_PWD')
+
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.setLevel(logging.DEBUG)
 
@@ -46,7 +48,9 @@ class STBase:
         """
         if not test_unique or not self.get_existing(self.api_tag):
             self.logger.info('payload {}'.format(self.payload()))
-            resp = requests.post('{}/{}'.format(self.base_url, self.api_tag), json=self.payload())
+            resp = requests.post('{}/{}'.format(self.base_url, self.api_tag),
+                                 auth=('write', self._password),
+                                 json=self.payload())
             self.logger.info('response {}'.format(resp.text))
             self.logger.info('headers {}'.format(resp.headers))
             m = IDREGEX.search(resp.headers.get('location', ''))

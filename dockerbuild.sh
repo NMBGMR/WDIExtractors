@@ -1,11 +1,18 @@
 echo "Stopping containers"
+
+for i in 1 2 3 4
+do
+  echo "stop st." $i
+  docker stop st.$i
+  echo "stop yml." $i
+  docker stop yml.$i
+done
+
 docker stop csv
-docker stop st
-docker stop yml
 docker stop wq_csv
 
 echo "Containers stopped"
-VERSION=0.3
+VERSION=0.4
 CLOWDER_URL=34.106.253.53
 
 echo "Build containers"

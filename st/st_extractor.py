@@ -18,12 +18,19 @@ import yaml
 import logging
 from pyclowder.utils import StatusMessage
 from pyclowder.extractors import Extractor
-import pyclowder.files
+from pyclowder import files
 
 from pysensorthings.objects import Location, Thing, Sensor, ObservedProperty, Datastream, Observation
 
 
-def process_meta(yd):
+def validate_file(yd):
+    return all((key in yd
+                for key in ('location', 'thing',
+                            'sensor', 'observed_property',
+                            'datastream', 'observations')))
+
+
+def upload_to_st(yd):
     location = Location(yd['location'])
     location.add()
 
@@ -58,34 +65,21 @@ def process_meta(yd):
     return metadata
 
 
-def validate_file(yd):
-    return all((key in yd
-                for key in ('location', 'thing',
-                            'sensor', 'observed_property',
-                            'datastream', 'observations')))
-
-
-def st_upload(input_file):
+def upload_yml(input_file):
     """
     take a upload.yml file and add to sensor things
 
     :param input_file:
     :return:
     """
-    ret = {}
+
     with open(input_file, 'r') as rfile:
         try:
             yd = yaml.load(rfile, Loader=yaml.SafeLoader)
-        except BaseException as e:
-            yd = None
-            print('asdf', e)
-
-        if yd:
             if validate_file(yd):
-                metadata = process_meta(yd)
-                ret['metadata'] = metadata
-
-    return ret
+                return upload_to_st(yd)
+        except BaseException as e:
+            pass
 
 
 class STExtractor(Extractor):
@@ -108,17 +102,17 @@ class STExtractor(Extractor):
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
 
-        ret = st_upload(inputfile)
-        if ret:
-            metadata = self.get_metadata(ret['metadata'], 'file', file_id, host)
+        metadata = upload_yml(inputfile)
+        if metadata:
+            metadata = self.get_metadata(metadata, 'file', file_id, host)
             logger.debug(metadata)
 
             # upload metadata
-            pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
+            files.upload_metadata(connector, host, secret_key, file_id, metadata)
 
             # set tags
             tags = {'tags': ['SensorThings']}
-            pyclowder.files.upload_tags(connector, host, secret_key, file_id, tags)
+            files.upload_tags(connector, host, secret_key, file_id, tags)
             connector.status_update(StatusMessage.processing, {"type": "file", "id": file_id}, "Deleting file tags.")
 
             # delete tags

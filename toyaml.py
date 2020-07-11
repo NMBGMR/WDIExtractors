@@ -44,7 +44,7 @@ def get_observation_type(value):
     return ot
 
 
-def dicts_toyaml(location_name, path, items, config):
+def dicts_toyaml(location_name, thing_name, path, items, config):
     items = list(items)
     item = items[0]
     logger.debug('items {}'.format(items))
@@ -58,7 +58,7 @@ def dicts_toyaml(location_name, path, items, config):
            'observed_property': {'name': 'Depth below ground surface',
                                  'description': 'continuous pressure transducer measurement of groundwater head'}}
 
-    thing = {'name': 'WaterLevelPressure',
+    thing = {'name': thing_name,
              'description': 'Water Well'}
     if config.get('thing_properties'):
         thing['properties'] = config['thing_properties'](item)

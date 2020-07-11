@@ -50,38 +50,45 @@ def extract_data(p):
     return [dict(zip(columns, ri)) for ri in results]
 
 
-def generate_wl_yml(p, op):
-    records = extract_data(p)
+def generate_wl_yml(pid, op):
+    records = extract_data(pid)
 
     def result(record):
         v = record['DepthToWaterBGS']
         return round(v, 2)
 
     def properties(record):
+        agency_key = 'PointID'
+
         return {'data_source': record['DataSource'],
                 'measurement_method': record['MeasurementMethod'],
-                'data_reliability': record['DataReliability']}
+                'data_reliability': record['DataReliability'],
+                'agency': 'NMBGMR',
+                'agency_id': record[agency_key],
+                'agency_key': agency_key}
 
+    location_name = 'NMWDI-$autoinc'
+    thingid = pid
     try:
-        dicts_toyaml(p, op, records, {'lat': 'LatitudeDD',
-                                      'lon': 'LongitudeDD',
-                                      'time': 'DateMeasured',
-                                      'result': result,
-                                      'thing_properties': properties})
+        dicts_toyaml(location_name, thingid, op, records, {'lat': 'LatitudeDD',
+                                                           'lon': 'LongitudeDD',
+                                                           'time': 'DateMeasured',
+                                                           'result': result,
+                                                           'thing_properties': properties})
         print('wrote {}. nrecords={}'.format(op, len(records)))
     except BaseException as e:
         print('Failed making {}. {}'.format(p, e))
 
 
 def generate_wl_ymls():
-    for p in PUBLIC_POINTIDS:
-        op = os.path.join('data', 'wl', '{}.yml'.format(p))
-        generate_wl_yml(p, op)
+    for pid in PUBLIC_POINTIDS:
+        op = os.path.join('data', 'wl', '{}.yml'.format(pid))
+        generate_wl_yml(pid, op)
 
 
 def sort_ymls():
     for p in PUBLIC_POINTIDS:
-        if p=='AR-0028':
+        if p == 'AR-0028':
             continue
 
         with open('data/wl/{}.yml'.format(p), 'r') as rfile:
@@ -90,13 +97,14 @@ def sort_ymls():
         obs = yd['observations']
 
         def skey(obs):
-            t,r = obs.split(',')
+            t, r = obs.split(',')
             t = t.strip()
             return datetime.fromisoformat(t[:-1])
 
         yd['observations'] = sorted(obs, key=skey)
         with open('data/wl/{}.sorted.yml'.format(p), 'w') as wfile:
             yaml.dump(yd, wfile)
+
 
 def main():
     """
@@ -105,6 +113,7 @@ def main():
     """
     # generate_wl_ymls()
     sort_ymls()
+
 
 if __name__ == '__main__':
     main()

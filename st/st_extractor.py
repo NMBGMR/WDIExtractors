@@ -30,9 +30,10 @@ def validate_file(yd):
                             'datastream', 'observations')))
 
 
-def upload_to_st(yd):
+def upload_to_st(yd, logger):
     location = Location(yd)
     location.add()
+    logger.debug('Added location')
 
     thing = Thing(yd)
     thing.set_related(location)
@@ -65,21 +66,24 @@ def upload_to_st(yd):
     return metadata
 
 
-def upload_yml(input_file):
+def upload_yml(input_file, logger):
     """
     take a upload.yml file and add to sensor things
 
     :param input_file:
     :return:
     """
-
+   
     with open(input_file, 'r') as rfile:
         try:
             yd = yaml.load(rfile, Loader=yaml.SafeLoader)
             if validate_file(yd):
-                return upload_to_st(yd)
+                logger.debug('file validated')
+                return upload_to_st(yd, logger)
         except BaseException as e:
-            pass
+            import traceback
+            logger.debug(traceback.format_exc())
+            logger.debug(e)
 
 
 class STExtractor(Extractor):
@@ -95,14 +99,15 @@ class STExtractor(Extractor):
 
         # setup logging for the exctractor
         logging.getLogger('pyclowder').setLevel(logging.DEBUG)
-        logging.getLogger('__main__').setLevel(logging.DEBUG)
+        logging.getLogger('st').setLevel(logging.DEBUG)
 
     def process_message(self, connector, host, secret_key, resource, parameters):
-        logger = logging.getLogger(__name__)
+        logger = logging.getLogger('st')
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
 
-        metadata = upload_yml(inputfile)
+        metadata = upload_yml(inputfile, logger)
+        logger.debug(metadata)
         if metadata:
             metadata = self.get_metadata(metadata, 'file', file_id, host)
             logger.debug(metadata)

@@ -28,7 +28,7 @@ class STBase:
     key = None
 
     def __init__(self, yd=None):
-        self._yd = yd[self.key]
+        self._yd = yd[self.key] if yd else None
         self.base_url = yd['destination']
         self._password = environ.get('ST_WRITE_PWD')
 
@@ -69,7 +69,8 @@ class STBase:
     def get_existing(self, url):
         cmd = "{}/{}?$filter=name eq '{}'".format(self.base_url, url, self.name)
         self.logger.debug(cmd)
-        resp = requests.get(cmd)
+        resp = requests.get(cmd, auth=('read','read'))
+        self.logger.debug(resp)
         try:
             self.setiotid(resp.json()['value'][0]['@iot.id'])
             return self.iotid

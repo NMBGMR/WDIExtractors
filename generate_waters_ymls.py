@@ -52,8 +52,9 @@ def factory(row):
     agency_id = '{}-{}'.format(row['pod_basin'], row['pod_nbr'])
     thing = {'name': agency_id,
              'description': 'OSE POD',
-             'properties': {'agency_id': podid,
-                            'agency_key': 'pod_rec_nbr'}}
+             'properties': {'organization': 'OSE',
+                            'organization_id': podid,
+                            'organization_key': 'pod_rec_nbr'}}
 
     obj = {'location': location,
            'thing': thing}
@@ -63,7 +64,7 @@ def factory(row):
 
 def meter_factory(meter):
     return {'name': meter['mtr_serial_nbr'],
-              'description': 'OSE POD mtr_serial_nbr'}
+            'description': 'OSE POD mtr_serial_nbr'}
 
 
 def datastream_factory():
@@ -87,6 +88,11 @@ def obs_factory(mtr_id, p):
     return obs
 
 
+def obs_property_factory():
+    return {'name': 'Meter reading',
+            'description': 'OSE meter reading'}
+
+
 def main():
     pods_path = '/Users/ross/Programming/wdidata/waters/pod.tsv'
     meter_info = '/Users/ross/Programming/wdidata/waters/meter_info.csv'
@@ -106,7 +112,8 @@ def main():
             obj['sensor'] = meter_factory(meter)
             obj['datastream'] = datastream_factory()
             obj['observations'] = obs_factory(meter['mtr_rec_nbr'], meter_detail)
-
+            obj['observed_property'] = obs_property_factory()
+            obj['destination'] = 'https://ose.newmexicowaterdata.org/FROST-Server/v1.1'
             print('obj', obj)
 
             # write to file. upload to clowder is currently manual

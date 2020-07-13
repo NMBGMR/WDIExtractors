@@ -63,9 +63,9 @@ def generate_wl_yml(pid, op):
         return {'data_source': record['DataSource'],
                 'measurement_method': record['MeasurementMethod'],
                 'data_reliability': record['DataReliability'],
-                'agency': 'NMBGMR',
-                'agency_id': record[agency_key],
-                'agency_key': agency_key}
+                'organization': 'NMBGMR',
+                'organization_id': record[agency_key],
+                'organization_key': agency_key}
 
     location_name = 'NMWDI-$autoinc'
     thingid = pid
@@ -102,6 +102,7 @@ def sort_ymls():
             return datetime.fromisoformat(t[:-1])
 
         yd['observations'] = sorted(obs, key=skey)
+        yd['destination'] = 'https://st.newmexicowaterdata.org/FROST-Server/v1.1'
         with open('data/wl/{}.sorted.yml'.format(p), 'w') as wfile:
             yaml.dump(yd, wfile)
 

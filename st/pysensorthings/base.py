@@ -28,7 +28,7 @@ class STBase:
 
     def __init__(self, yd=None):
         self._yd = yd
-        self.base_url = environ.get('ST_URL')
+        self.base_url = yd['destination']
         self._password = environ.get('ST_WRITE_PWD')
 
         self.logger = logging.getLogger(self.__class__.__name__)

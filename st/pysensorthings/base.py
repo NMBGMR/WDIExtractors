@@ -25,9 +25,10 @@ class STBase:
     iotid = None
     api_tag = None
     selflink = None
+    key = None
 
     def __init__(self, yd=None):
-        self._yd = yd
+        self._yd = yd[self.__class__.__name__.lower()]
         self.base_url = yd['destination']
         self._password = environ.get('ST_WRITE_PWD')
 

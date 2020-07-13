@@ -31,20 +31,20 @@ def validate_file(yd):
 
 
 def upload_to_st(yd):
-    location = Location(yd['location'])
+    location = Location(yd)
     location.add()
 
-    thing = Thing(yd['thing'])
+    thing = Thing(yd)
     thing.set_related(location)
     thing.add()
 
-    sensor = Sensor(yd['sensor'])
+    sensor = Sensor(yd)
     sensor.add()
 
-    obprop = ObservedProperty(yd['observed_property'])
+    obprop = ObservedProperty(yd)
     obprop.add()
 
-    ds = Datastream(yd['datastream'])
+    ds = Datastream(yd)
     ds.set_related(thing, obprop, sensor)
     ds.add()
 

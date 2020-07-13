@@ -20,6 +20,7 @@ from pysensorthings.definitions import FOOT, OM_Observation, UNITS, OTYPES, CAST
 
 class Location(STBase):
     api_tag = 'Locations'
+    key = 'location'
     _name = None
 
     @property
@@ -62,7 +63,7 @@ class Location(STBase):
 class Thing(Related):
     api_tag = 'Things'
     _location_id = None
-
+    key = 'thing'
     def get_existing(self, url):
         url = 'Locations({})/Things'.format(self._location_id)
         return super(Thing, self).get_existing(url)
@@ -83,7 +84,7 @@ class Thing(Related):
 
 class Sensor(STBase):
     api_tag = 'Sensors'
-
+    key='sensor'
     def payload(self):
         p = self._base_payload()
         p['encodingType'] = 'application/pdf'
@@ -93,6 +94,7 @@ class Sensor(STBase):
 
 class ObservedProperty(STBase):
     api_tag = 'ObservedProperties'
+    key = 'observed_property'
 
     def payload(self):
         p = self._base_payload()
@@ -102,6 +104,7 @@ class ObservedProperty(STBase):
 
 class Datastream(Related):
     api_tag = 'Datastreams'
+    key = 'datastream'
     _thing_id = None
 
     def get_existing(self, url):

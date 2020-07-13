@@ -67,7 +67,9 @@ class STBase:
         self.selflink = '{}/{}({})'.format(self.base_url, self.api_tag, self.iotid)
 
     def get_existing(self, url):
-        resp = requests.get("{}/{}?$filter=name eq '{}'".format(self.base_url, url, self.name))
+        cmd = "{}/{}?$filter=name eq '{}'".format(self.base_url, url, self.name)
+        self.logger.debug(cmd)
+        resp = requests.get(cmd)
         try:
             self.setiotid(resp.json()['value'][0]['@iot.id'])
             return self.iotid

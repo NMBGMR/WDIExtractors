@@ -50,7 +50,7 @@ def upload_to_st(yd, logger):
     ds.add()
 
     for oi in yd['observations']:
-        obs = Observation(oi)
+        obs = Observation(yd, oi)
         obs.set_related(ds)
         obs.add()
 

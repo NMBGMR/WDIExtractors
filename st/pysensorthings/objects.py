@@ -138,8 +138,8 @@ class Observation(Related):
 
     _cast = None
 
-    def __init__(self, yl):
-        super(Observation, self).__init__()
+    def __init__(self, yd, yl):
+        super(Observation, self).__init__(yd)
         t, r = yl.split(',')
         self.phenomenonTime = t.strip()
         self.resultTime = self.phenomenonTime

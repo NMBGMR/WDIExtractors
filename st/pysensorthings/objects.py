@@ -35,11 +35,12 @@ class Location(STBase):
         name = self._yd['name']
         if self._name:
             name = self._name
-        elif name == 'NMWDI-$autoinc':
+        elif name.endswith('$autoinc'):
             # get the last NMWDI idenifier, increment 1.
             # Location.name == NMWDI-{Location.id}
             i = 0
-            url = "{}/Locations?$orderby=id+desc&$filter=startswith(name,  'NMWDI-')".format(self.base_url, )
+            prefix, _ = name.split('$')
+            url = "{}/Locations?$orderby=id+desc&$filter=startswith(name,  '{}')".format(self.base_url, prefix)
             resp = requests.get(url)
             if resp:
                 try:
@@ -47,7 +48,7 @@ class Location(STBase):
                 except (IndexError, ValueError, TypeError) as e:
                     self.logger.warning('Failed getting latest location id: {}'.format(e))
 
-            name = 'NMWDI-{:06n}'.format(i+1)
+            name = '{}{:06n}'.format(prefix, i + 1)
             self._name = name
 
         return name
@@ -64,6 +65,7 @@ class Thing(Related):
     api_tag = 'Things'
     _location_id = None
     key = 'thing'
+
     def get_existing(self, url):
         url = 'Locations({})/Things'.format(self._location_id)
         return super(Thing, self).get_existing(url)
@@ -84,7 +86,8 @@ class Thing(Related):
 
 class Sensor(STBase):
     api_tag = 'Sensors'
-    key='sensor'
+    key = 'sensor'
+
     def payload(self):
         p = self._base_payload()
         p['encodingType'] = 'application/pdf'

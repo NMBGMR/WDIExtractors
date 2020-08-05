@@ -14,6 +14,8 @@
 # limitations under the License.
 # ===============================================================================
 import json
+import os
+
 import yaml
 import logging
 
@@ -21,7 +23,7 @@ from pyclowder import files
 from pyclowder.extractors import Extractor
 
 
-class YAMLExtractor(Extractor):
+class Validator(Extractor):
     def __init__(self):
         Extractor.__init__(self)
 
@@ -76,9 +78,14 @@ class YAMLExtractor(Extractor):
         required_keys = ('location', 'thing',
                          'sensor', 'observed_property',
                          'datastream', 'observations', 'destination')
+
         with open(ip, 'r') as rf:
             try:
-                yd = yaml.load(rf, Loader=yaml.FullLoader)
+                _, ext = os.path.splitext(ip)
+                if ext == '.json':
+                    yd = json.load(rf)
+                else:
+                    yd = yaml.load(rf, Loader=yaml.FullLoader)
 
                 # check for missing keys
                 keys = [key for key in required_keys if key not in yd]
@@ -86,11 +93,11 @@ class YAMLExtractor(Extractor):
                     logger.info('validation failed. missing keys={}'.format(keys))
                 else:
                     return True
-            except yaml.YAMLError as e:
-                logger.critical('Validation of yaml file failed. Error={}'.format(e))
+            except (yaml.YAMLError, json.JSONDecodeError) as e:
+                logger.critical('Validation of file failed. Error={}'.format(e))
 
 
 if __name__ == '__main__':
-    e = YAMLExtractor()
+    e = Validator()
     e.start()
 # ============= EOF =============================================

@@ -2,7 +2,7 @@
   "@context": "http://localhost:8000/contexts/extractors.jsonld",
   "name": "wdi.yaml",
   "version": "0.2",
-  "description": "Auto process/validate upload.yml format",
+  "description": "Auto process/validate upload.yml/json format",
   "author": "Jake Ross",
   "contributors": [],
   "contexts": [
@@ -14,7 +14,9 @@
       "repUrl": "https://github.com/NMBGMR/WLextractor"
     }
   ],
-  "process": {"file": ["application/x-yaml", "application/octet-stream"]},
+  "process": {"file": ["application/x-yaml",
+                       "application/json",
+                       "application/octet-stream"]},
   "external_services": [],
   "dependencies": [],
   "bibtex": []

@@ -23,7 +23,7 @@ from pyclowder.extractors import Extractor
 import logging
 
 
-class WDIExtractor(Extractor):
+class CKANExtractor(Extractor):
     def __init__(self):
         Extractor.__init__(self)
 
@@ -84,6 +84,6 @@ class WDIExtractor(Extractor):
 
 
 if __name__ == '__main__':
-    e = WDIExtractor()
+    e = CKANExtractor()
     e.start()
 # ============= EOF =============================================

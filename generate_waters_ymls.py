@@ -18,17 +18,9 @@ from datetime import datetime
 import pyproj
 import yaml
 
+from util import row_gen
+
 projections = {}
-
-
-def row_gen(p, delimiter):
-    with open(p, 'r') as rfile:
-        header = next(rfile).strip().split(delimiter)
-        header = [h.strip() for h in header]
-        for line in rfile:
-            row = line.strip().split(delimiter)
-            row = dict(zip(header, row))
-            yield row
 
 
 def factory(row):
@@ -44,10 +36,10 @@ def factory(row):
     projections[zone] = p
     lon, lat = p(easting, northing, inverse=True)
 
-    location = {'name': 'NMWDI-$autoinc',
+    location = {'name': 'NMWDI-OSE-$autoinc',
                 'description': 'OSE POD import',
                 'geometry': {'type': 'Point',
-                             'coordinates': [lat, lon]}}
+                             'coordinates': [lon, lat]}}
     podid = row['pod_rec_nbr']
     agency_id = '{}-{}'.format(row['pod_basin'], row['pod_nbr'])
     thing = {'name': agency_id,

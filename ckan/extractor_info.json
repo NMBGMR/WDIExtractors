@@ -14,7 +14,7 @@
       "repUrl": "https://github.com/NMBGMR/WLextractor"
     }
   ],
-  "process": {"file": ["application/x-yaml"]},
+  "process": {"file": ["application/x-yaml", "application/json"]},
   "external_services": [],
   "dependencies": [],
   "bibtex": []

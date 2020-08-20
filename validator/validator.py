@@ -42,7 +42,7 @@ class Validator(Extractor):
         if self._validate(inputfile):
             # set tags
             tags = {'tags': ['STNeeded', 'CKANNeeded']}
-            rtags = {'tags': ['YNeeded', 'YAMLValidationFailed']}
+            rtags = {'tags': ['ValidationNeeded', 'ValidationFailed']}
 
             # set metadata
             metadata = self._make_metadata(inputfile)
@@ -54,8 +54,8 @@ class Validator(Extractor):
 
         else:
 
-            tags = {'tags': ['YAMLValidationFailed']}
-            rtags = {'tags': ['YNeeded']}
+            tags = {'tags': ['ValidationFailed']}
+            rtags = {'tags': ['ValidationNeeded']}
 
         logger.debug('adding tags={}'.format(tags))
         files.upload_tags(connector, host, secret_key, file_id, tags)

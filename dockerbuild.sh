@@ -35,7 +35,7 @@ echo "Run Containers"
 
 for i in 1 2 3 4
 do
-  docker run -d --name yml.$i yml:$VERSION
+  docker run -d --name validator.$i validator:$VERSION
   docker run -d --name st.$i st:$VERSION
 done
 

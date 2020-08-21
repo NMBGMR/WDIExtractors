@@ -33,6 +33,10 @@ PPM = {'name': 'Parts Per Million',
        'symbol': 'PPM',
        'definition': 'http://www.qudt.org/vocab/unit/PPM'}
 
+NPDES_PERMIT = {'name': 'NPDES Permit',
+            'symbol': 'p',
+            'definition': 'http://npdes.gov'}
+
 OM_CategoryObservation = 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation'
 OM_CountObservation = 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation'
 OM_Measurement = 'http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement'
@@ -56,5 +60,6 @@ UNITS = {'foot': FOOT,
          'c': DEGC,
          'ppm': PPM,
          'gallon': GAL,
-         'gal': GAL}
+         'gal': GAL,
+         'npdes_permit': NPDES_PERMIT}
 # ============= EOF =============================================

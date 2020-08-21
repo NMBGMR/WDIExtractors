@@ -52,7 +52,7 @@ class STExtractor(Extractor):
         inputfile = resource["local_paths"][0]
         file_id = resource['id']
 
-        metadata = self.upload_yml(inputfile)
+        metadata = self.upload(inputfile)
         self.logger.debug(metadata)
         if metadata:
             metadata = self.get_metadata(metadata, 'file', file_id, host)

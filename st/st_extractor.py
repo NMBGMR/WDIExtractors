@@ -122,7 +122,7 @@ class STExtractor(Extractor):
             try:
                 _, ext = os.path.splitext(input_file)
                 if ext == '.json':
-                    yd = json.load()
+                    yd = json.load(rfile)
                 else:
                     yd = yaml.load(rfile, Loader=yaml.SafeLoader)
 

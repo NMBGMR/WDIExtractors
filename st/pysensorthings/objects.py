@@ -27,7 +27,7 @@ class Location(STBase):
         url = 'Locations'
         lon, lat = self.geometry['coordinates']
         filterstr = "st_equals(location, geography'POINT ({} {})')".format(lon, lat)
-        return super(Thing, self).get_existing(url, filterstr)
+        return super(Location, self).get_existing(url, filterstr)
 
     @property
     def name(self):

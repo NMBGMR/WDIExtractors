@@ -70,8 +70,11 @@ class STBase:
         self.iotid = int(iotid)
         self.selflink = '{}/{}({})'.format(self.base_url, self.api_tag, self.iotid)
 
-    def get_existing(self, url):
-        cmd = "{}/{}?$filter=name eq '{}'".format(self.base_url, url, self.name)
+    def get_existing(self, url, filterstr=None):
+        if filterstr is None:
+            filterstr = "name eq '{}'".format(self.name)
+        cmd = "{}/{}?$filter={}".format(self.base_url, url, filterstr)
+
         self.logger.debug(cmd)
         resp = requests.get(cmd, auth=('read','read'))
         self.logger.debug(resp)

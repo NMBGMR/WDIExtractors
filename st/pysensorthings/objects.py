@@ -23,6 +23,12 @@ class Location(STBase):
     key = 'location'
     _name = None
 
+    def get_existing(self, url):
+        url = 'Locations'
+        lon, lat = self.geometry['coordinates']
+        filterstr = "st_equals(location, geography'POINT ({} {})')".format(lon, lat)
+        return super(Thing, self).get_existing(url, filterstr)
+
     @property
     def name(self):
         """
@@ -36,6 +42,10 @@ class Location(STBase):
         if self._name:
             name = self._name
         elif name.endswith('$autoinc'):
+            # this only works if only one st extractor is running at a time
+            # if multiple are running the it possible to get multiple locations with the same name
+            # post upload cleanup can be done directly to the database
+
             # get the last NMWDI idenifier, increment 1.
             # Location.name == NMWDI-{Location.id}
             i = 0
@@ -56,7 +66,8 @@ class Location(STBase):
     def payload(self):
         p = self._base_payload()
         p['encodingType'] = "application/vnd.geo+json"
-
+        if isinstance(self.properties, (list, dict)):
+            p['properties'] = self.properties
         p['location'] = self.geometry
         return p
 

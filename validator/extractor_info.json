@@ -1,6 +1,6 @@
 {
   "@context": "http://localhost:8000/contexts/extractors.jsonld",
-  "name": "wdi.yaml",
+  "name": "wdi.validator",
   "version": "0.2",
   "description": "Auto process/validate upload.yml/json format",
   "author": "Jake Ross",
@@ -11,7 +11,7 @@
   "repository": [
     {
       "repType": "git",
-      "repUrl": "https://github.com/NMBGMR/WLextractor"
+      "repUrl": "https://github.com/NMWDI/wdiextractor"
     }
   ],
   "process": {"file": ["application/x-yaml",

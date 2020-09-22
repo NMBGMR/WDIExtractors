@@ -66,8 +66,7 @@ class Location(STBase):
     def payload(self):
         p = self._base_payload()
         p['encodingType'] = "application/vnd.geo+json"
-        if isinstance(self.properties, (list, dict)):
-            p['properties'] = self.properties
+        p['properties'] = self.properties
         p['location'] = self.geometry
         return p
 

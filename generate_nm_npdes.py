@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ===============================================================================
+from st.pysensorthings.definitions import OM_CategoryObservation
 from util import row_gen, st_iso_format
 import json
 
@@ -37,7 +38,9 @@ def transform(row):
              'properties': properties}
 
     ds = {'name': 'Permit Duration',
-          'description': 'effective and expiration dates for this permit'}
+          'description': 'effective and expiration dates for this permit',
+          'unitofMeasurement': 'npdes_permit',
+          'observationType': 'uri'}
 
     obsp = {'name': row['PERMITTYPE'],
             'description': 'PERMITTYPE'}
@@ -48,6 +51,7 @@ def transform(row):
 
     obj = {'location': location,
            'thing': thing,
+           'destination': 'https://st.newmexicowaterdata.org/FROST-Server/v1.1',
            'sensor': {'name': 'Permitting App',
                       'description': 'No Description'},
            'datastream': ds,

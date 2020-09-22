@@ -38,8 +38,8 @@ echo "Run Containers"
 for i in 1 2 3 4
 do
   docker run -d --name validator.$i validator:$VERSION
-  docker run -d --name st.$i st:$VERSION
 done
 
+docker run -d --name st.$i st:$VERSION
 docker run -d --name wq_csv wq_csv:$VERSION
 docker run -d --name csv csv:$VERSION

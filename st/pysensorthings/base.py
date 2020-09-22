@@ -51,6 +51,8 @@ class STBase:
         post to configured ST instance
         :return:
         """
+
+        # get existing sets self.iotid
         if not test_unique or not self.get_existing(self.api_tag):
             self.logger.info('payload {}'.format(self.payload()))
             resp = requests.post('{}/{}'.format(self.base_url, self.api_tag),

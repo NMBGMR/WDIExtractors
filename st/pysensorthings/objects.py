@@ -173,4 +173,28 @@ class Observation(Related):
 
     def add(self):
         super(Observation, self).add(test_unique=False)
+
+
+class DataArrayObservation(Observation):
+    api_tag = 'CreateObservations'
+
+    def __init__(self, yd, obs):
+        Related.__init__(self, yd)
+        self._obs = obs
+
+    def payload(self):
+        def factory(o):
+            pt, r = o.split(',')
+            pt = pt.strip()
+            r = self._cast(r.strip())
+            rt = pt
+            return pt, rt, r
+
+        dataArray = [factory(o) for o in self._obs]
+
+        obj = self._related
+        obj['components'] = ['phenomenonTime', 'resultTime', 'result']
+        obj['dataArray'] = dataArray
+        return [obj]
+
 # ============= EOF =============================================

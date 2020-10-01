@@ -66,6 +66,6 @@ UNITS = {'foot': FOOT,
          'gallon': GAL,
          'gal': GAL,
          'mg_per_l': MG_PER_L,
-         'mg/L': MG_PER_L,
+         'mg/l': MG_PER_L,
          'npdes_permit': NPDES_PERMIT}
 # ============= EOF =============================================

@@ -24,6 +24,8 @@ from pyclowder import files
 
 from pysensorthings.objects import Location, Thing, Sensor, ObservedProperty, Datastream, Observation
 
+from st.pysensorthings.objects import DataArrayObservation
+
 
 def validate_file(yd):
     return all((key in yd
@@ -95,10 +97,14 @@ class STExtractor(Extractor):
         ds.add()
         self.logger.debug('Added datastream')
 
-        for oi in yd['observations']:
-            obs = Observation(yd, oi)
-            obs.set_related(ds)
-            obs.add()
+        obs = yd['observations']
+        if len(obs) > 1:
+            obs = DataArrayObservation(yd, obs)
+        else:
+            obs = Observation(yd, obs[0])
+
+        obs.set_related(ds)
+        obs.add()
 
         self.logger.debug('added observations')
 

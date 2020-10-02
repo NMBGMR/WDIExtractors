@@ -22,9 +22,8 @@ from pyclowder.utils import StatusMessage
 from pyclowder.extractors import Extractor
 from pyclowder import files
 
-from pysensorthings.objects import Location, Thing, Sensor, ObservedProperty, Datastream, Observation
+from pysensorthings.objects import Location, Thing, Sensor, ObservedProperty, Datastream, Observation, DataArrayObservation
 
-from st.pysensorthings.objects import DataArrayObservation
 
 
 def validate_file(yd):

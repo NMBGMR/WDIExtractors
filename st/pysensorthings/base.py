@@ -46,7 +46,7 @@ class STBase:
     def iotid_(self):
         return {'@iot.id': self.iotid}
 
-    def add(self, test_unique=True):
+    def add(self, test_unique=True, setiotid=True):
         """
         post to configured ST instance
         :return:
@@ -60,13 +60,15 @@ class STBase:
                                  json=self.payload())
             self.logger.info('response {}'.format(resp.text))
             self.logger.info('headers {}'.format(resp.headers))
-            m = IDREGEX.search(resp.headers.get('location', ''))
-            if m:
-                iotid = m.group('id')[1:-1]
-            else:
-                iotid = resp.json()['@iot.id']
+            if setiotid:
+                m = IDREGEX.search(resp.headers.get('location', ''))
 
-            self.setiotid(iotid)
+                if m:
+                    iotid = m.group('id')[1:-1]
+                else:
+                    iotid = resp.json()['@iot.id']
+
+                self.setiotid(iotid)
 
     def setiotid(self, iotid):
         self.iotid = int(iotid)

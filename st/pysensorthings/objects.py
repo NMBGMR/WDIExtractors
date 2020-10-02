@@ -137,7 +137,7 @@ class Datastream(Related):
     def payload(self):
         if self._related:
             p = self._base_payload()
-            p['unitOfMeasurement'] = UNITS.get(self.unitofMeasurement.lower(), FOOT)
+            p['unitOfMeasurement'] = UNITS.get(self.unitOfMeasurement.lower(), FOOT)
             p['observationType'] = OTYPES.get(self.observationType.lower(), OM_Observation)
             p.update(self._related)
             return p
@@ -172,7 +172,7 @@ class Observation(Related):
             return p
 
     def add(self):
-        super(Observation, self).add(test_unique=False)
+        super(Observation, self).add(test_unique=False, setiotid=False)
 
 
 class DataArrayObservation(Observation):
